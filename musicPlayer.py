@@ -52,7 +52,8 @@ class MusicPlayer:
     def pauseSong(self):
         folderNavigation.pause()
         
-
+''' Commented out the code to test the buttons 
 root = Tk()
 my_gui = MusicPlayer(root)
 root.mainloop()
+'''
