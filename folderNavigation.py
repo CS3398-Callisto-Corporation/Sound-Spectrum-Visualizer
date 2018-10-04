@@ -7,18 +7,14 @@ Created on Mon Oct  1 16:11:51 2018
 
 This file contains the play/pause and next/prev song buttons implementation (not GUI, just functionality)
 """
-from tkinter import *
+
 import os
 from tkinter.filedialog import askdirectory
 import pygame
 from time import sleep
 
-root = Tk()
-root.minsize(300,300)
-
 listofsongs = []
 index = 0
-
 
 
  # this function prompts the user to choose a folder that contains the music they wish to listen to
