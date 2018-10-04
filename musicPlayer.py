@@ -24,7 +24,7 @@ class MusicPlayer:
         self.play_button = Button(master, text="Play", command=self.playSong)
         self.play_button.pack()
 
-        self.pause_button = Button(master, text="Pause", command=self.pauseSong)
+        self.pause_button = Button(master, text="Stop", command=self.stopSong)
         self.pause_button.pack()
 
         self.next_button = Button(master, text="Next", command=self.next)
@@ -49,10 +49,10 @@ class MusicPlayer:
     def playSong(self):
         folderNavigation.play()
         
-    def pauseSong(self):
+    def stopSong(self):
         folderNavigation.pause()
         
-''' Commented out the code to test the buttons 
+'''Commented out the code to test the buttons
 root = Tk()
 my_gui = MusicPlayer(root)
 root.mainloop()
