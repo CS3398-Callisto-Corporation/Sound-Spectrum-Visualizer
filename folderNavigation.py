@@ -75,6 +75,10 @@ def stop():
 
 def currentSong():
     return listofsongs[index]
+
+def getListSongs():
+    return listofsongs
+    
     
 ''' uncomment the below code to test the functionality of these functions (lol)
 chooseFolder()
