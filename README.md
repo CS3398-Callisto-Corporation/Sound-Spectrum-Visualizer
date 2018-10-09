@@ -19,3 +19,5 @@ to a Numpy array to be passed to the GUI team and decoded into spectrogram bars 
 
 Alyssa LeJeune - going to work on connecting the FFT to the bar graph and get it working in real time
 
+Wes Nicol - work on integrating the different GUIs (ex: have the graphs pop up when a song is selected in the music player
+
