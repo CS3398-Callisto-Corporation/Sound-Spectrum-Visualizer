@@ -21,3 +21,5 @@ Alyssa LeJeune - going to work on connecting the FFT to the bar graph and get it
 
 Wes Nicol - work on integrating the different GUIs (ex: have the graphs pop up when a song is selected in the music player
 
+Allen Van - Similar to Alyssa, but going to work on connecting the Time Domain graph and make it work in real time. 
+
