@@ -29,7 +29,7 @@ Christopher Jew - Worked on musicPlayer GUI and added some functions to folderNa
 				  
 Alyssa LeJeune - worked on animatedGraph.py and got it to run by itself by generating random numbers.
 
-Allen Van - Worked on the TimeDomainHUI.py file, as of now it runs on its own with a set equation set for the sin wave.
+Allen Van - Worked on the TimeDomainGUI.py file, as of now it runs on its own with a set equation set for the sin wave. It's more of a demo representation of what to expect when testing live.
 
 ====Next Steps====
 
