@@ -27,7 +27,7 @@ Christopher Jew - Worked on musicPlayer GUI and added some functions to folderNa
 				  has .wav files). Click "Start Music Player" to load the files. Use the other buttons to navigate
 				  the song list and play the sound. 
 				  
-				  
+Alyssa LeJeune - worked on animatedGraph.py and got it to run by itself by generating random numbers.
 
 
 ====Next Steps====
