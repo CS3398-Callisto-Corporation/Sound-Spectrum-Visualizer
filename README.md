@@ -31,6 +31,8 @@ Alyssa LeJeune - worked on animatedGraph.py and got it to run by itself by gener
 
 Allen Van - Worked on the TimeDomainGUI.py file, as of now it runs on its own with a set equation set for the sin wave. It's more of a demo representation of what to expect when testing live.
 
+Wes Nicol - Created folderNavigation.py file. This file contains the functions that allow the user to choose a folder and navigate through their songs.
+            This folder also contains the functions that implement the start, pause, previous song, and next song buttons.  
 ====Next Steps====
 
 Alyssa LeJeune - going to work on connecting the FFT to the bar graph and get it working in real time
