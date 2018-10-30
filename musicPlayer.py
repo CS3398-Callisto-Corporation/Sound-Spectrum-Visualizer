@@ -25,12 +25,23 @@ class MusicPlayer:
         master.title("Sound Spectrum Visualizer Music Player")
         master.resizable(0,0)
 
+        #Drop down menu
+        self.menubar = Menu(root)
+        self.filemenu = Menu(self.menubar, tearoff = 0)
+        self.filemenu.add_command(label="Open", command = self.choose)
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label="Exit", command=root.destroy)
+        self.menubar.add_cascade(label="File", menu=self.filemenu)
+        root.config(menu=self.menubar)
+
         # Multiple frames
         self.top = Frame(root)
         #self.top.config(bg="white")
         self.bottom = Frame(root)
         #self.bottom.config(bg="white")
+        self.middle = Frame(root)
         self.top.pack(side=TOP)
+        self.middle.pack(side=TOP)
         self.bottom.pack(side=BOTTOM, fill=BOTH, expand=True)
 
         # Top frame includes text box and labels
@@ -39,22 +50,32 @@ class MusicPlayer:
         self.title.image = titleImage
         self.title.pack(in_=self.top)
 
-        self.textBox = Text(state='disabled', width=35, height=20)
+        self.listSongBox = tkst.ScrolledText(state='disabled',width=40, height=10)
+        self.listSongBox.configure(state='normal')
+        self.listSongBox.insert(INSERT, "----Song List---- \n")
+        self.listSongBox.configure(state='disabled')
+        self.listSongBox.pack(in_=self.top)
+
+        self.currentSongTitle = Label(master, text="Playing:")
+        self.currentSongTitle.pack(in_=self.middle,side=LEFT)
+
+        self.currentSong = Label(master)
+        self.currentSong.pack(in_=self.middle,side=RIGHT)
+
+        '''self.textBox = Text(state='disabled', width=25, height=10)
         self.textBox.configure(state='normal')
         self.textBox.insert(INSERT, "Current Song: ")
         self.textBox.configure(state='disabled')
         self.textBox.pack(in_=self.top,side=LEFT)
-        
-        self.listSongBox = tkst.ScrolledText(state='disabled',width=35, height=20)
-        self.listSongBox.configure(state='normal')
-        self.listSongBox.insert(INSERT, "----Song List---- \n")
-        self.listSongBox.configure(state='disabled')
-        self.listSongBox.pack(in_=self.top,side=RIGHT)
+        '''
 
         # Bottom frame includes buttons
+
+        ''' Added drop down file menu instead
         self.choose_button = Button(master,text="Choose Folder", command = self.choose)
         self.choose_button.config(image = folderImage)
         self.choose_button.image = folderImage
+        '''
         
         self.start_button = Button(master,text="Start Music Player", command = self.load)
         self.start_button.config(image = startImage)
@@ -81,7 +102,8 @@ class MusicPlayer:
         self.prev_button.image = prevImage
 
         #Pack buttons
-        self.choose_button.pack(in_=self.bottom, side=LEFT, fill=BOTH, expand=True)
+        
+        #self.choose_button.pack(in_=self.bottom, side=LEFT, fill=BOTH, expand=True)
         
         self.start_button.pack(in_=self.bottom, side=LEFT, fill=BOTH, expand=True)
         self.start_button.configure(state=DISABLED)
@@ -145,11 +167,8 @@ class MusicPlayer:
         
     # Writes currentSong to text box 
     def writeCurrentSong(self):
-        self.textBox.configure(state='normal')
         currentSong = folderNavigation.currentSong()
-        self.textBox.delete('1.0', END)
-        self.textBox.insert(INSERT, "Current Song: " + currentSong)
-        self.textBox.configure(state='disabled')
+        self.currentSong.config(text=currentSong)
         
     # Displays list of songs loaded
     def displayListOfSongs(self):
