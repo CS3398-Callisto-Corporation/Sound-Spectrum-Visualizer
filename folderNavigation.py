@@ -19,13 +19,14 @@ numWav = 0
 
 
  # this function prompts the user to choose a folder that contains the music they wish to listen to
-def chooseFolder(): 
+def chooseFolder():
+    global numWav
     directory = askdirectory()
     os.chdir(directory)
     
     for files in os.listdir(directory):
         if files.endswith(".wav"):
-            ++numWav
+            numWav+=1
             listofsongs.append(files)
             print(files)
     
