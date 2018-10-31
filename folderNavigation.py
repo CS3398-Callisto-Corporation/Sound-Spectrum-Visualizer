@@ -12,6 +12,7 @@ import os
 from tkinter.filedialog import askdirectory
 import pygame
 from time import sleep
+import sound_tester
 
 listofsongs = []
 index = 0
@@ -38,7 +39,8 @@ def startMusicPlayer():
 
 # when called, this function plays the currently selected song
 def play():
-    pygame.mixer.music.play()
+    #pygame.mixer.music.play()
+    sound_tester.playSong(listofsongs[index])
     
 def nextSong():
     global index
@@ -46,11 +48,17 @@ def nextSong():
     if index == (numWav-1):
         index = 0
         pygame.mixer.music.load(listofsongs[index])
-        pygame.mixer.music.play()
+        #pygame.mixer.music.play()
+        
+        #uncomment below line to automatically play when prev song is selected
+        #sound_tester.playSong(listofsongs[index])
     else:
         index += 1
         pygame.mixer.music.load(listofsongs[index])
-        pygame.mixer.music.play()
+        #pygame.mixer.music.play()
+        
+        #uncomment below line to automatically play when prev song is selected
+        #sound_tester.playSong(listofsongs[index])
 
 def prevSong():
     global index
@@ -58,11 +66,18 @@ def prevSong():
     if index == 0:
         index = (numWav-1)
         pygame.mixer.music.load(listofsongs[index])
-        pygame.mixer.music.play()
+        #pygame.mixer.music.play()
+        
+        #uncomment below line to automatically play when prev song is selected
+        #sound_tester.playSong(listofsongs[index])
     else:
         index -= 1
         pygame.mixer.music.load(listofsongs[index])
-        pygame.mixer.music.play()
+        #pygame.mixer.music.play()
+        
+        #uncomment below line to automatically play when prev song is selected
+        
+        #sound_tester.playSong(listofsongs[index])
     
 #added pause/unpause to differ from stop    
 def pause():
