@@ -12,7 +12,6 @@ import os
 from tkinter.filedialog import askdirectory
 import pygame
 from time import sleep
-import sound_tester
 
 listofsongs = []
 index = 0
@@ -39,8 +38,7 @@ def startMusicPlayer():
 
 # when called, this function plays the currently selected song
 def play():
-    #pygame.mixer.music.play()
-    sound_tester.playSong(listofsongs[index])
+    pygame.mixer.music.play()
     
 def nextSong():
     global index
@@ -48,17 +46,11 @@ def nextSong():
     if index == (numWav-1):
         index = 0
         pygame.mixer.music.load(listofsongs[index])
-        #pygame.mixer.music.play()
-        
-        #uncomment below line to automatically play when prev song is selected
-        #sound_tester.playSong(listofsongs[index])
+        pygame.mixer.music.play()
     else:
         index += 1
         pygame.mixer.music.load(listofsongs[index])
-        #pygame.mixer.music.play()
-        
-        #uncomment below line to automatically play when prev song is selected
-        #sound_tester.playSong(listofsongs[index])
+        pygame.mixer.music.play()
 
 def prevSong():
     global index
@@ -66,18 +58,11 @@ def prevSong():
     if index == 0:
         index = (numWav-1)
         pygame.mixer.music.load(listofsongs[index])
-        #pygame.mixer.music.play()
-        
-        #uncomment below line to automatically play when prev song is selected
-        #sound_tester.playSong(listofsongs[index])
+        pygame.mixer.music.play()
     else:
         index -= 1
         pygame.mixer.music.load(listofsongs[index])
-        #pygame.mixer.music.play()
-        
-        #uncomment below line to automatically play when prev song is selected
-        
-        #sound_tester.playSong(listofsongs[index])
+        pygame.mixer.music.play()
     
 #added pause/unpause to differ from stop    
 def pause():
@@ -106,6 +91,10 @@ def setVolume(v):
         pygame.mixer.music.set_volume(0.0)
     else:
         pygame.mixer.music.set_volume(v)
+
+def getLengthFile():
+    temp = pygame.mixer.Sound(currentSong())
+    return temp.get_length()
     
     
 ''' uncomment the below code to test the functionality of these functions (lol)
