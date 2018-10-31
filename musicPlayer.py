@@ -40,8 +40,10 @@ class MusicPlayer:
         self.bottom = Frame(root)
         #self.bottom.config(bg="white")
         self.middle = Frame(root)
+        self.bottomVol = Frame(root)
         self.top.pack(side=TOP)
         self.middle.pack(side=TOP)
+        self.bottomVol.pack(side=BOTTOM)
         self.bottom.pack(side=BOTTOM, fill=BOTH, expand=True)
 
         # Top frame includes text box and labels
@@ -50,10 +52,10 @@ class MusicPlayer:
         self.title.image = titleImage
         self.title.pack(in_=self.top)
 
+        self.listSongTitle = Label(master, text="Song List")
+        self.listSongTitle.pack(in_=self.top)
+
         self.listSongBox = tkst.ScrolledText(state='disabled',width=40, height=10)
-        self.listSongBox.configure(state='normal')
-        self.listSongBox.insert(INSERT, "----Song List---- \n")
-        self.listSongBox.configure(state='disabled')
         self.listSongBox.pack(in_=self.top)
 
         self.currentSongTitle = Label(master, text="Playing:")
@@ -122,6 +124,17 @@ class MusicPlayer:
 
         self.next_button.pack(in_=self.bottom, side=LEFT, fill=BOTH, expand=True)
         self.next_button.configure(state=DISABLED)
+
+        #Volume Bar
+        self.volLabel = Label(root, text="Volume")
+        self.volLabel.pack(in_=self.bottomVol,side=LEFT)
+        
+        self.testVar = IntVar()
+        self.testVar.set(50)
+        self.volBar = Scale(master, from_=0, to=100, variable=self.testVar, orient=HORIZONTAL, showvalue=0)
+        self.testLabel = Label(root, textvariable=self.testVar)
+        self.volBar.pack(in_=self.bottomVol,side=LEFT)
+        self.testLabel.pack(in_=self.bottomVol, side=LEFT)
         
         
 
@@ -139,6 +152,7 @@ class MusicPlayer:
         self.stop_button.configure(state=NORMAL)
         self.next_button.configure(state=NORMAL)
         self.prev_button.configure(state=NORMAL)
+        self.start_button.configure(state=DISABLED)
     # Calls nextSong from folderNavigation                              
     def next(self):
         folderNavigation.nextSong()
