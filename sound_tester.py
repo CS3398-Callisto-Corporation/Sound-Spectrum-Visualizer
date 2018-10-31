@@ -41,7 +41,14 @@ def playSong(songTitle):
     ax2.set_xlim(20, RATE)
     ax2.set_ylim(0,22)
     
+    def handle_close(evt):
+        p.terminate()
+        stream.close()
+        plt.close('all')
+    
     while len(data) > 0:
+        
+        
         stream.write(data)
     
         data_int = struct.unpack(str(1*CHUNK) + 'B', data)
@@ -56,6 +63,9 @@ def playSong(songTitle):
         fig.canvas.flush_events()
         fig.show()
         data = wf.readframes(CHUNK)
+        
+        fig.canvas.mpl_connect('close_event', handle_close)
+        
         
     
     
