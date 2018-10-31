@@ -88,6 +88,8 @@ def unPause():
 
 def stop():
     pygame.mixer.music.stop()
+    
+
 
 def currentSong():
     return listofsongs[index]
