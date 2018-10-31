@@ -129,10 +129,11 @@ class MusicPlayer:
         self.volLabel = Label(root, text="Volume")
         self.volLabel.pack(in_=self.bottomVol,side=LEFT)
         
-        self.testVar = IntVar()
-        self.testVar.set(50)
-        self.volBar = Scale(master, from_=0, to=100, variable=self.testVar, orient=HORIZONTAL, showvalue=0)
-        self.testLabel = Label(root, textvariable=self.testVar)
+        self.volumeV = DoubleVar() #Variable to hold volume 
+        self.volumeV.set(.5)
+        
+        self.volBar = Scale(master, from_=0, to=1, variable=self.volumeV,orient=HORIZONTAL, showvalue=0, resolution=.01, command=self.updateVol)
+        self.testLabel = Label(root, textvariable=self.volumeV)
         self.volBar.pack(in_=self.bottomVol,side=LEFT)
         self.testLabel.pack(in_=self.bottomVol, side=LEFT)
         
@@ -190,6 +191,14 @@ class MusicPlayer:
         for songs in folderNavigation.getListSongs():
             self.listSongBox.insert(INSERT, songs + "\n")
         self.listSongBox.configure(state='disabled')
+
+    #Update Volume in real time
+    def updateVol(self,_=None):
+        folderNavigation.setVolume(self.getVol())
+
+    def getVol(self):
+        return self.volumeV.get()
+
         
         
 root = Tk()

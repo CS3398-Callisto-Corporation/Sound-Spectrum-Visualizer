@@ -79,6 +79,18 @@ def currentSong():
 
 def getListSongs():
     return listofsongs
+
+def getVolume():
+    return get_volume()
+
+def setVolume(v):
+    pygame.mixer.init()
+    if v>=1:
+        pygame.mixer.music.set_volume(1.0)
+    elif v<=0:
+        pygame.mixer.music.set_volume(0.0)
+    else:
+        pygame.mixer.music.set_volume(v)
     
     
 ''' uncomment the below code to test the functionality of these functions (lol)
