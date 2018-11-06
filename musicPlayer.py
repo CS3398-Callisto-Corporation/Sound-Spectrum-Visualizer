@@ -157,7 +157,7 @@ class MusicPlayer:
         folderNavigation.startMusicPlayer()
         self.displayListOfSongs()
         self.writeCurrentSong()
-        self.resetCountLabel()
+        #self.resetCountLabel()
         self.updateTimeLabel()
         self.play_button.configure(state=NORMAL)
         self.pause_button.configure(state=NORMAL)
@@ -183,16 +183,16 @@ class MusicPlayer:
         if pauseCondition:
             pauseCondition = False
             folderNavigation.unPause()
-            self.incrementCountLabel()
+            #self.incrementCountLabel()
         else:
-            self.resetCountLabel()
+            #self.resetCountLabel()
             folderNavigation.play()
-            self.incrementCountLabel()
+            #self.incrementCountLabel()
     # Calls stop from folderNavigation    
     def stopSong(self):
         global increment
         increment = -1
-        self.resetCountLabel()
+        #self.resetCountLabel()
         folderNavigation.stop()
     # Calls pause from folderNavigation 
     def pauseSong(self):
