@@ -1,4 +1,32 @@
 # Sound-Spectrum-Visualizer
+
+
+
+Project Status: Currently we have the sound and graphs synced up, however the GUI freezes while a .wav file is playing.
+		
+Each team members next steps:
+
+- Wes: 
+
+- Chris: 
+
+- Alyssa
+
+- Zach: 
+
+- Allen:
+
+
+
+
+
+
+
+
+
+
+******************************PREVIOUS INFORMATION (POST-SPRINT-1)******************************************************************************
+
 An application that will take a filename or folder name, and present a player and sound spectrum visualizer.
 
 Some .wav files have been included for ease of testing (gotta love the Godfather)
