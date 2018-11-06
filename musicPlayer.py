@@ -3,10 +3,11 @@ import folderNavigation
 from tkinter import *
 import tkinter.scrolledtext as tkst
 from PIL import Image, ImageTk # pip install pillow
+from time import time
 
 pauseCondition = False
 countCondition = False
-increment = 0
+increment = -1
 
 class MusicPlayer:
     
@@ -139,11 +140,11 @@ class MusicPlayer:
         self.testLabel.pack(in_=self.bottomVol, side=RIGHT)
         self.volBar.pack(in_=self.bottomVol,side=LEFT)
 
-        '''#Song Time
-        self.countLabel = Label(root, text='')
-        self.timeLabel.pack(in_=self.middle,side=RIGHT)
+        #Song Time
         self.timeLabel = Label(root, text='')
-        self.timeLabel.pack(in_=self.middle, side=RIGHT)'''
+        self.timeLabel.pack(in_=self.middle, side=RIGHT)
+        self.countLabel = Label(root, text='')
+        self.countLabel.pack(in_=self.middle,side=RIGHT)
         
         
 
@@ -156,7 +157,8 @@ class MusicPlayer:
         folderNavigation.startMusicPlayer()
         self.displayListOfSongs()
         self.writeCurrentSong()
-        #self.updateTimeLabel()
+        self.resetCountLabel()
+        self.updateTimeLabel()
         self.play_button.configure(state=NORMAL)
         self.pause_button.configure(state=NORMAL)
         self.stop_button.configure(state=NORMAL)
@@ -165,41 +167,32 @@ class MusicPlayer:
         self.start_button.configure(state=DISABLED)
     # Calls nextSong from folderNavigation                              
     def next(self):
-        #global increment
-        #global countCondition
         folderNavigation.nextSong()
         self.writeCurrentSong()
-        #self.updateTimeLabel()
-        #increment = 0
-        #countCondition = False
+        self.updateTimeLabel()
         
     # Calls prevSong from folderNavigation    
     def prev(self):
-        #global increment
-        #global countCondition
         folderNavigation.prevSong()
         self.writeCurrentSong()
-        #self.updateTimeLabel()
-        #increment = 0
-        #countCondition = False
-
+        self.updateTimeLabel()
         
     # Calls playSong from folderNavigation      
     def playSong(self):
         global pauseCondition
-        #global countCondition
-        #global increment
         if pauseCondition:
             pauseCondition = False
-            #countCondition = False
             folderNavigation.unPause()
-            #self.counterLabel()
+            self.incrementCountLabel()
         else:
+            self.resetCountLabel()
             folderNavigation.play()
-            #increment = 0
-            #self.counterLabel()
+            self.incrementCountLabel()
     # Calls stop from folderNavigation    
     def stopSong(self):
+        global increment
+        increment = -1
+        self.resetCountLabel()
         folderNavigation.stop()
     # Calls pause from folderNavigation 
     def pauseSong(self):
@@ -240,21 +233,27 @@ class MusicPlayer:
         return s
 
     def getTimeString(self):
-        min_sec = str("/"+self.getMinutes())+":"+str(self.getSeconds())
+        min_sec = "/"+str(self.getMinutes())+":"+str(self.getSeconds())
         return min_sec
 
-    def updateSetTimeLabel(self):
+    def updateTimeLabel(self):
         self.timeLabel.config(text=self.getTimeString())
 
-    #Recursive
-    def counterLabel(self):
-        if(countCondition):
+    
+    def incrementCountLabel(self):
+        def counter():
             global increment
-            str_inc = str(increment)
-            self.countLabel.config(text=str_inc)
-            self.countLabel.after(1000, increment)
+            if pauseCondition or increment > self.getLengthOfSong():
+                return
+            self.countLabel.config(text=str(increment))
             increment+=1
-        self.counterLabel()
+            self.countLabel.after(1000, self.incrementCountLabel())
+        counter()
+        
+    def resetCountLabel(self):
+        self.countLabel.config(text="0:0")
+        
+        
             
        
         
