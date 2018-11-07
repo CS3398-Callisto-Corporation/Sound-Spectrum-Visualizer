@@ -4,11 +4,11 @@
 
 Project Status: Currently we have the sound and graphs synced up, however the GUI freezes while a .wav file is playing.
 		
-Each team members next steps:
+Each team members next steps for Sprint 3:
 
 - Wes: 
 
-- Chris: 
+- Chris: Continue to improve the GUI and add threading to improve the interface (ie. Time bar needs threading)
 
 - Alyssa
 
@@ -16,13 +16,17 @@ Each team members next steps:
 
 - Allen:
 
+What each team member worked on during Sprint 2:
 
+- Wes: 
 
+- Chris: I worked on the "Music Player" GUI. The current "Music Player" in the master branch has a few issues when it was combined with the analysis part of code. A copy of how the GUI behaved before the combination can be found on the branch: https://github.com/CS3398-Callisto-Corporation/Sound-Spectrum-Visualizer/tree/c_j_developer This is how we hope the GUI behaves with the addition of the graphs.
 
+- Alyssa
 
+- Zach: 
 
-
-
+- Allen:
 
 
 ******************************PREVIOUS INFORMATION (POST-SPRINT-1)******************************************************************************
