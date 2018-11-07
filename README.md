@@ -10,7 +10,7 @@ Each team members next steps for Sprint 3:
 
 - Chris: Continue to improve the GUI and add threading to improve the interface (ie. Time bar needs threading)
 
-- Alyssa
+- Alyssa: Continue working of the bar graph and get it compatible with the fft data and PyAudio.
 
 - Zach: 
 
@@ -22,7 +22,7 @@ What each team member worked on during Sprint 2:
 
 - Chris: I worked on the "Music Player" GUI. The current "Music Player" in the master branch has a few issues when it was combined with the analysis part of code. A copy of how the GUI behaved before the combination can be found on the branch: https://github.com/CS3398-Callisto-Corporation/Sound-Spectrum-Visualizer/tree/c_j_developer This is how we hope the GUI behaves with the addition of the graphs.
 
-- Alyssa
+- Alyssa: I continued working on the bar graph visulizer, but due to problems with PyAudio, I was not able to update anything due to not knowing if the program  was running correctly.
 
 - Zach: 
 
