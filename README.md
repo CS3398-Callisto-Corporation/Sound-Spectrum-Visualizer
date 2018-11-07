@@ -6,7 +6,7 @@ Project Status: Currently we have the sound and graphs synced up, however the GU
 		
 Each team members next steps for Sprint 3:
 
-- Wes: 
+- Wes: Correcting the spacing between the two graphs. Example: The x-axis title from the graph on top overlaps with the title of the graph on bottom.
 
 - Chris: Continue to improve the GUI and add threading to improve the interface (ie. Time bar needs threading)
 
@@ -18,7 +18,7 @@ Each team members next steps for Sprint 3:
 
 What each team member worked on during Sprint 2:
 
-- Wes: 
+- Wes: I worked on the meeting between PyAudio and PyGame. This ended up as allowing PyAudio to both play and analyize the audio, and just using the indexing and file navigation from the folderNavigation.py as control over which song will be played/analyze
 
 - Chris: I worked on the "Music Player" GUI. The current "Music Player" in the master branch has a few issues when it was combined with the analysis part of code. A copy of how the GUI behaved before the combination can be found on the branch: https://github.com/CS3398-Callisto-Corporation/Sound-Spectrum-Visualizer/tree/c_j_developer This is how we hope the GUI behaves with the addition of the graphs.
 
