@@ -14,7 +14,7 @@ Each team members next steps for Sprint 3:
 
 - Zach: 
 
-- Allen:
+- Allen: Need to improve/re-design code for time domain graph, as to work with fft data and PyAudio with no error. 
 
 What each team member worked on during Sprint 2:
 
