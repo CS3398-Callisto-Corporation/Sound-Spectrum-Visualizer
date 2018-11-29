@@ -1,8 +1,11 @@
 import folderNavigation
-
+from time import sleep
 from tkinter import *
 import tkinter.scrolledtext as tkst
 from PIL import Image, ImageTk # pip install pillow
+from multiprocessing import Process
+
+
 
 pauseCondition = False
 
@@ -10,6 +13,8 @@ class MusicPlayer:
     
     def __init__(self, master):
 
+        #root = mainMusicPlayer()
+        
         # Load images
         folderImage = PhotoImage(file="icons/folder-search-icon.png")
         playImage = PhotoImage(file="icons/play-icon.png")
@@ -22,17 +27,18 @@ class MusicPlayer:
 
         # Parent Widget
         self.master = master
-        master.title("Sound Spectrum Visualizer Music Player")
+        # master.title("Sound Spectrum Visualizer Music Player") #this line gives an error with multiprocessing (but i think you can assign the name at the bottom of this file and it still works)
         master.resizable(0,0)
+
 
         #Drop down menu
         self.menubar = Menu(root)
         self.filemenu = Menu(self.menubar, tearoff = 0)
         self.filemenu.add_command(label="Open", command = self.choose)
         self.filemenu.add_separator()
-        self.filemenu.add_command(label="Exit", command=root.destroy)
+        #self.filemenu.add_command(label="Exit", command=root.destroy) # this line was giving an error with multiprocessing
         self.menubar.add_cascade(label="File", menu=self.filemenu)
-        root.config(menu=self.menubar)
+        #root.config(menu=self.menubar) # this line was giving an error with multiprocessing
 
         # Multiple frames
         self.top = Frame(root)
@@ -72,12 +78,12 @@ class MusicPlayer:
         '''
 
         # Bottom frame includes buttons
-
-        ''' Added drop down file menu instead
+        '''
+        #Added drop down file menu instead
         self.choose_button = Button(master,text="Choose Folder", command = self.choose)
         self.choose_button.config(image = folderImage)
         self.choose_button.image = folderImage
-        '''
+        '''     
         
         self.start_button = Button(master,text="Start Music Player", command = self.load)
         self.start_button.config(image = startImage)
@@ -199,9 +205,35 @@ class MusicPlayer:
     def getVol(self):
         return self.volumeV.get()
 
-        
-        
-root = Tk()
-musicPlayer = MusicPlayer(root)
-root.mainloop()
 
+
+
+
+
+#this function should open the spectrum graph
+def openGraph():
+    while True:
+        print("Inside openGraph()")
+        sleep(1)
+        
+        
+root = None
+
+def mainMusicPlayer():
+    root=Tk()
+    root.title = "Music Player"
+    musicPlayer = MusicPlayer(root)
+    return root
+
+
+
+
+if __name__ == '__main__':
+    
+    #start openGraph() as its own process
+    p1 = Process(target=openGraph)
+    p1.start()
+    
+    root = mainMusicPlayer()
+    root.mainloop()
+    

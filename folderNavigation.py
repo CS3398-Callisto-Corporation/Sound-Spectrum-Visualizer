@@ -8,6 +8,7 @@ Created on Mon Oct  1 16:11:51 2018
 This file contains the play/pause and next/prev song buttons implementation (not GUI, just functionality)
 """
 import testLiveGraph
+import musicPlayer
 import os
 from tkinter.filedialog import askdirectory
 import pygame
@@ -36,13 +37,15 @@ def chooseFolder():
 def startMusicPlayer():
     pygame.mixer.init()
     pygame.mixer.music.load(listofsongs[0])
-
-    testLiveGraph.openGraph()
+    
+    #testLiveGraph.openGraph()
     
 # when called, this function plays the currently selected song
 def play():
     pygame.mixer.music.play()
     #sound_tester.playSong(listofsongs[index])
+    #musicPlayer.openGraph()
+    
     
 def nextSong():
     global index
