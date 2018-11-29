@@ -171,7 +171,7 @@ class MusicPlayer:
             folderNavigation.unPause()
         else:
             folderNavigation.play()
-    # Calls stop from folderNavigation    
+    # Calls stop from folderNavigation
     def stopSong(self):
         folderNavigation.stop()
     # Calls pause from folderNavigation 

@@ -99,7 +99,15 @@ class AudioStream(object):
         self.start()
 
 
+# call from another file to open the graph 
+def openGraph():
+    print('testLiveGraph.openGraph() called')
+    audio_app = AudioStream()
+    audio_app.animation()
+    
+
 if __name__ == '__main__':
 
     audio_app = AudioStream()
     audio_app.animation()
+    
