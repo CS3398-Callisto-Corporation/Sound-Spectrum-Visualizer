@@ -38,12 +38,12 @@ def startMusicPlayer():
     pygame.mixer.init()
     pygame.mixer.music.load(listofsongs[0])
     
-    #testLiveGraph.openGraph()
     
 # when called, this function plays the currently selected song
 def play():
     pygame.mixer.music.play()
     #sound_tester.playSong(listofsongs[index])
+    #testLiveGraph.openGraph()
     #musicPlayer.openGraph()
     
     
@@ -117,6 +117,21 @@ def setVolume(v):
         pygame.mixer.music.set_volume(0.0)
     else:
         pygame.mixer.music.set_volume(v)
+
+def getRawLength():
+    a = pygame.mixer.Sound(listofsongs[index])
+    rawLength = a.get_length()
+    return rawLength
+
+def getLength():
+    lengthSong = getRawLength()
+    mins, secs = divmod(lengthSong,60)
+    mins = round(mins)
+    secs = round(secs)
+    formattedLength = '{:02}:{:02d}'.format(mins, secs)
+    return formattedLength
+    
+
     
     
 ''' uncomment the below code to test the functionality of these functions (lol)

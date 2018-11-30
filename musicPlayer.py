@@ -1,13 +1,18 @@
 import folderNavigation
+import testLiveGraph
 from time import sleep
 from tkinter import *
 import tkinter.scrolledtext as tkst
 from PIL import Image, ImageTk # pip install pillow
 from multiprocessing import Process
+import threading
 
 
 
 pauseCondition = False
+updateTimeCondition = False
+changeSongCondition = False
+startCondition = False
 
 class MusicPlayer:
     
@@ -31,14 +36,14 @@ class MusicPlayer:
         master.resizable(0,0)
 
 
-        #Drop down menu
+        '''#Drop down menu
         self.menubar = Menu(root)
         self.filemenu = Menu(self.menubar, tearoff = 0)
         self.filemenu.add_command(label="Open", command = self.choose)
         self.filemenu.add_separator()
         #self.filemenu.add_command(label="Exit", command=root.destroy) # this line was giving an error with multiprocessing
         self.menubar.add_cascade(label="File", menu=self.filemenu)
-        #root.config(menu=self.menubar) # this line was giving an error with multiprocessing
+        #root.config(menu=self.menubar) # this line was giving an error with multiprocessing'''
 
         # Multiple frames
         self.top = Frame(root)
@@ -78,12 +83,11 @@ class MusicPlayer:
         '''
 
         # Bottom frame includes buttons
-        '''
-        #Added drop down file menu instead
+        
         self.choose_button = Button(master,text="Choose Folder", command = self.choose)
         self.choose_button.config(image = folderImage)
         self.choose_button.image = folderImage
-        '''     
+            
         
         self.start_button = Button(master,text="Start Music Player", command = self.load)
         self.start_button.config(image = startImage)
@@ -111,7 +115,7 @@ class MusicPlayer:
 
         #Pack buttons
         
-        #self.choose_button.pack(in_=self.bottom, side=LEFT, fill=BOTH, expand=True)
+        self.choose_button.pack(in_=self.bottom, side=LEFT, fill=BOTH, expand=True)
         
         self.start_button.pack(in_=self.bottom, side=LEFT, fill=BOTH, expand=True)
         self.start_button.configure(state=DISABLED)
@@ -142,6 +146,14 @@ class MusicPlayer:
         self.testLabel = Label(root, textvariable=self.volumeV)
         self.volBar.pack(in_=self.bottomVol,side=LEFT)
         self.testLabel.pack(in_=self.bottomVol, side=LEFT)
+
+        '''#Time Bar
+        self.currentTimeLabel = Label(root, text ='   00:00', relief = RIDGE)
+        self.currentTimeLabel.pack(in_=self.bottomVol,side=LEFT)
+        self.timeLabel = Label(root, text ='/ 00:00')
+        self.timeLabel.pack(in_=self.bottomVol,side=RIGHT)'''
+
+        
         
         
 
@@ -154,6 +166,8 @@ class MusicPlayer:
         folderNavigation.startMusicPlayer()
         self.displayListOfSongs()
         self.writeCurrentSong()
+        #self.updateCurrentLength()
+        startCondition = True
         self.play_button.configure(state=NORMAL)
         self.pause_button.configure(state=NORMAL)
         self.stop_button.configure(state=NORMAL)
@@ -164,14 +178,22 @@ class MusicPlayer:
     def next(self):
         folderNavigation.nextSong()
         self.writeCurrentSong()
+        global changeSongCondition
+        changeSongCondition = True
+        updateTimeCondition = True
     # Calls prevSong from folderNavigation    
     def prev(self):
         folderNavigation.prevSong()
         self.writeCurrentSong()
+        global changeSongCondition
+        changeSongCondition = True
+        updateTimeCondition = True
         
     # Calls playSong from folderNavigation      
     def playSong(self):
         global pauseCondition
+        global updateTimeCondition
+        updateTimeCondition = True
         if pauseCondition:
             pauseCondition = False
             folderNavigation.unPause()
@@ -180,9 +202,15 @@ class MusicPlayer:
     # Calls stop from folderNavigation
     def stopSong(self):
         folderNavigation.stop()
+        global updateTimeCondition
+        updateTimeCondition = False
+        global changeSongCondition
+        changeSongCondition = True
     # Calls pause from folderNavigation 
     def pauseSong(self):
         global pauseCondition
+        global updateTimeCondition
+        updateTimeCondition = False
         pauseCondition = True
         folderNavigation.pause()
         
@@ -190,6 +218,7 @@ class MusicPlayer:
     def writeCurrentSong(self):
         currentSong = folderNavigation.currentSong()
         self.currentSong.config(text=currentSong)
+        #self.timeLabel.config(text = '/ ' + self.getLength())
         
     # Displays list of songs loaded
     def displayListOfSongs(self):
@@ -205,14 +234,35 @@ class MusicPlayer:
     def getVol(self):
         return self.volumeV.get()
 
+    def getLength(self):
+        return folderNavigation.getLength()
 
+    '''def getCurrentLength(self):
+        totalLength = folderNavigation.getRawLength()
+        x = 0;
+        while x <= totalLength:
+            global changeSongCondition
+            if changeSongCondition:
+                totalLength = folderNavigation.getRawLength()
+                changeSongCondition = False
+            mins, secs = divmod(x,60)
+            mins = round(mins)
+            secs = round(secs)
+            formattedCurrentLength = '{:02}:{:02d}'.format(mins, secs)
+            self.currentTimeLabel.config(text = '   ' + formattedCurrentLength)
+            if updateTimeCondition:
+                sleep(1)
+                x+=1'''
 
-
+    '''def updateCurrentLength(self):
+        t1 = threading.Thread(target=self.getCurrentLength)
+        t1.start()'''
 
 
 #this function should open the spectrum graph
 def openGraph():
     while True:
+        testLiveGraph.openGraph()
         print("Inside openGraph()")
         sleep(1)
         
@@ -225,6 +275,10 @@ def mainMusicPlayer():
     musicPlayer = MusicPlayer(root)
     return root
 
+def closing_window():
+    root.destroy()
+    p1.terminate()
+
 
 
 
@@ -233,7 +287,10 @@ if __name__ == '__main__':
     #start openGraph() as its own process
     p1 = Process(target=openGraph)
     p1.start()
-    
     root = mainMusicPlayer()
+
+    #This overides the close button (X). Without this the sound will continue to play and the process wont terminate.
+    root.protocol("WM_DELETE_WINDOW",closing_window)
+    
     root.mainloop()
     
