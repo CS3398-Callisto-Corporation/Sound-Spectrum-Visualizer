@@ -13,6 +13,8 @@ pauseCondition = False
 updateTimeCondition = False
 changeSongCondition = False
 startCondition = False
+count = 0
+
 
 class MusicPlayer:
     
@@ -32,7 +34,7 @@ class MusicPlayer:
 
         # Parent Widget
         self.master = master
-        # master.title("Sound Spectrum Visualizer Music Player") #this line gives an error with multiprocessing (but i think you can assign the name at the bottom of this file and it still works)
+        #master.title("Sound Spectrum Visualizer Music Player") #this line gives an error with multiprocessing (but i think you can assign the name at the bottom of this file and it still works)
         master.resizable(0,0)
 
 
@@ -41,9 +43,9 @@ class MusicPlayer:
         self.filemenu = Menu(self.menubar, tearoff = 0)
         self.filemenu.add_command(label="Open", command = self.choose)
         self.filemenu.add_separator()
-        #self.filemenu.add_command(label="Exit", command=root.destroy) # this line was giving an error with multiprocessing
+        #self.filemenu.add_command(label="Exit", command=root.destroy()) # this line was giving an error with multiprocessing
         self.menubar.add_cascade(label="File", menu=self.filemenu)
-        #root.config(menu=self.menubar) # this line was giving an error with multiprocessing'''
+        self.master.config(menu=self.menubar) # this line was giving an error with multiprocessing'''
 
         # Multiple frames
         self.top = Frame(root)
@@ -69,11 +71,24 @@ class MusicPlayer:
         self.listSongBox = tkst.ScrolledText(state='disabled',width=40, height=10)
         self.listSongBox.pack(in_=self.top)
 
+        
+        #Clickable ListBox
+        #self.listSongBoxTest = Listbox(self.top, width=20, height=10,)
+
+        #self.scrollbar = Scrollbar(self.top, orient="vertical")
+        #self.scrollbar.config(command=self.listSongBoxTest.yview)
+        #self.scrollbar.pack(side="right", fill="y")
+        #self.listSongBoxTest.config(yscrollcommand=self.scrollbar.set)
+        #self.listSongBoxTest.pack(side="right")
+        
+        
+
         self.currentSongTitle = Label(master, text="Playing:")
         self.currentSongTitle.pack(in_=self.middle,side=LEFT)
 
         self.currentSong = Label(master)
         self.currentSong.pack(in_=self.middle,side=RIGHT)
+
 
         '''self.textBox = Text(state='disabled', width=25, height=10)
         self.textBox.configure(state='normal')
@@ -147,27 +162,24 @@ class MusicPlayer:
         self.volBar.pack(in_=self.bottomVol,side=LEFT)
         self.testLabel.pack(in_=self.bottomVol, side=LEFT)
 
-        '''#Time Bar
+        #Time Bar
         self.currentTimeLabel = Label(root, text ='   00:00', relief = RIDGE)
         self.currentTimeLabel.pack(in_=self.bottomVol,side=LEFT)
         self.timeLabel = Label(root, text ='/ 00:00')
-        self.timeLabel.pack(in_=self.bottomVol,side=RIGHT)'''
+        self.timeLabel.pack(in_=self.bottomVol,side=RIGHT)
 
         
-        
-        
-
     # Calls the choose folder from folderNavigation
     def choose(self):
          folderNavigation.chooseFolder()
          self.start_button.configure(state=NORMAL)
     # Calls startMusicPlayer from folderNavigation
     def load(self):
+        count = 0
         folderNavigation.startMusicPlayer()
         self.displayListOfSongs()
         self.writeCurrentSong()
-        #self.updateCurrentLength()
-        startCondition = True
+        self.updateCurrentLength()
         self.play_button.configure(state=NORMAL)
         self.pause_button.configure(state=NORMAL)
         self.stop_button.configure(state=NORMAL)
@@ -179,6 +191,9 @@ class MusicPlayer:
         folderNavigation.nextSong()
         self.writeCurrentSong()
         global changeSongCondition
+        global updateTimeCondition
+        global startCondition
+        startCondition = True
         changeSongCondition = True
         updateTimeCondition = True
     # Calls prevSong from folderNavigation    
@@ -186,6 +201,9 @@ class MusicPlayer:
         folderNavigation.prevSong()
         self.writeCurrentSong()
         global changeSongCondition
+        global updateTimeCondition
+        global startCondition
+        startCondition = True
         changeSongCondition = True
         updateTimeCondition = True
         
@@ -193,6 +211,8 @@ class MusicPlayer:
     def playSong(self):
         global pauseCondition
         global updateTimeCondition
+        global startCondition
+        startCondition = True
         updateTimeCondition = True
         if pauseCondition:
             pauseCondition = False
@@ -206,10 +226,18 @@ class MusicPlayer:
         updateTimeCondition = False
         global changeSongCondition
         changeSongCondition = True
+        global startCondition
+        startCondition = False
+        global count
+        count = 0
+        
+        
     # Calls pause from folderNavigation 
     def pauseSong(self):
         global pauseCondition
         global updateTimeCondition
+        global startCondition
+        startCondition = False
         updateTimeCondition = False
         pauseCondition = True
         folderNavigation.pause()
@@ -218,7 +246,7 @@ class MusicPlayer:
     def writeCurrentSong(self):
         currentSong = folderNavigation.currentSong()
         self.currentSong.config(text=currentSong)
-        #self.timeLabel.config(text = '/ ' + self.getLength())
+        self.timeLabel.config(text = '/ ' + self.getLength())
         
     # Displays list of songs loaded
     def displayListOfSongs(self):
@@ -237,26 +265,27 @@ class MusicPlayer:
     def getLength(self):
         return folderNavigation.getLength()
 
-    '''def getCurrentLength(self):
+    def getCurrentLength(self):
         totalLength = folderNavigation.getRawLength()
-        x = 0;
-        while x <= totalLength:
+        while True:
             global changeSongCondition
+            global count
             if changeSongCondition:
+                count = 0
                 totalLength = folderNavigation.getRawLength()
                 changeSongCondition = False
-            mins, secs = divmod(x,60)
+            mins, secs = divmod(count,60)
             mins = round(mins)
             secs = round(secs)
             formattedCurrentLength = '{:02}:{:02d}'.format(mins, secs)
             self.currentTimeLabel.config(text = '   ' + formattedCurrentLength)
-            if updateTimeCondition:
+            if startCondition and count < round(totalLength):
                 sleep(1)
-                x+=1'''
+                count+=1
 
-    '''def updateCurrentLength(self):
+    def updateCurrentLength(self):
         t1 = threading.Thread(target=self.getCurrentLength)
-        t1.start()'''
+        t1.start()
 
 
 #this function should open the spectrum graph
@@ -271,7 +300,7 @@ root = None
 
 def mainMusicPlayer():
     root=Tk()
-    root.title = "Music Player"
+    root.title("Sound Spectrum Visualizer Music Player")
     musicPlayer = MusicPlayer(root)
     return root
 
@@ -288,7 +317,6 @@ if __name__ == '__main__':
     p1 = Process(target=openGraph)
     p1.start()
     root = mainMusicPlayer()
-
     #This overides the close button (X). Without this the sound will continue to play and the process wont terminate.
     root.protocol("WM_DELETE_WINDOW",closing_window)
     
