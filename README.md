@@ -1,6 +1,23 @@
 # Sound-Spectrum-Visualizer
 
+Post Sprint 3:
 
+Project Status: Freezing GUI problem has been solved, but input data for graph was changed to the microphone. Plays songs and analysis graph shows best in a quiet room
+
+Each team members next steps:
+
+- Wes: Research interface between pygame and the graph. Then pipe the output of pygame (the sound playing) to the input of the graph
+
+
+
+
+
+
+
+
+*************************************************************************************************************************
+
+*************************************************************************************************************************
 
 Project Status: Currently we have the sound and graphs synced up, however the GUI freezes while a .wav file is playing.
 		
