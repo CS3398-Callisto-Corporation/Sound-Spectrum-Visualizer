@@ -1,53 +1,64 @@
-
-import matplotlib.pyplot as plt
-from pylab import*
-from matplotlib.pyplot import plot
-import scipy
+import pyaudio
+import struct
+import wave
 import numpy as np
-from scipy import fftpack
-from scipy.io import wavfile
-
-sampFreq, snd = wavfile.read('440_sine.wav')
-
-snd = snd / (2.**15)
-
-print(snd.shape)
+import matplotlib.pyplot as plt
+from scipy.fftpack import fft
+import anime
 
 
-timeArray = arange(0, snd.shape[0], 1)
-timeArray = timeArray / sampFreq
-print(timeArray)
-timeArray = timeArray * 1000 #scale to milliseconds
+wf = wave.open('godfather1_naive.wav', 'rb')
 
-s1 = snd[:,0] 
+CHUNK = 1024 * 1
+FORMAT = pyaudio.paInt16
+RATE = wf.getframerate()
+CHANNELS = wf.getnchannels()
 
-plot(timeArray, s1, color='k')
-ylabel('Amplitude')
-xlabel('Time (ms)')
+p = pyaudio.PyAudio()
+stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+                channels=CHANNELS,
+                rate=RATE,
+                output=True)
 
-show()
-n = len(s1)
-p = fft(s1)
+data = wf.readframes(CHUNK)
 
-nUniquePts = int(ceil((n+1)/2.0))
-p = p[0:nUniquePts]
-p = abs(p)
+fig, (ax, ax2) = plt.subplots(2, figsize=(5, 8))
+x = np.arange(0, 1 * CHUNK, 2)
+x_fft = np.linspace(0, RATE, CHUNK)
 
-p = p / float(n) # scale by the number of points so that
-                 # the magnitude does not depend on the length 
-                 # of the signal or on its sampling frequency  
-p = p**2  # square it to get the power 
+line, = ax.plot(x)
+line_fft, = ax2.semilogx(x_fft)
 
-# multiply by two (see technical document for details)
-# odd nfft excludes Nyquist point
-if n % 2 > 0: # we've got odd number of points fft
-    p[1:len(p)] = p[1:len(p)] * 2
-else:
-    p[1:len(p) -1] = p[1:len(p) - 1] * 2 # we've got even number of points fft
+ax.set_title('Time Domain')
+ax.set_xlabel('Samples')
+ax.set_ylabel('Amplitude')
+ax.set_ylim(0, 255)
+ax.set_xlim(0, CHUNK / 2)
 
-freqArray = arange(0, nUniquePts, 1.0) * (sampFreq / n);
-plot(freqArray/1000, 10*log10(p), color='k')
-xlabel('Frequency (kHz)')
-ylabel('Power (dB)')
+ax2.set_title('Fourier Domain')
+ax2.set_xlim(20, RATE)
+ax2.set_ylim(0, 22)
 
-show()
+while len(data) > 0:
+    stream.write(data)
+
+    data_int = struct.unpack(str(1 * CHUNK) + 'B', data)
+    data_np = np.array(data_int, dtype='b')[::2] + 126
+
+    anime.graph(data_np)
+
+    line.set_ydata(data_np)
+
+    y_fft = fft(data_int)
+    line_fft.set_ydata(np.abs(y_fft[0:CHUNK]) / (CHUNK))
+    data = wf.readframes(CHUNK)
+    '''
+    fig.canvas.draw()
+    fig.canvas.flush_events()
+    fig.show()
+'''
+
+stream.stop_stream()
+stream.close()
+
+p.terminate()
