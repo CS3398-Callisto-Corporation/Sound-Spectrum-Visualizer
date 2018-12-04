@@ -12,6 +12,8 @@ Each team members next steps:
 
 - Zach: Decrease sensitivity of graphs, and implement filters on sound so that you could experiment with signal processing
 
+- Allen: Worked on testLiveGraph, captures sounds from mic instead of capturing sound FFT from source. Next Step would be either to stabalize the waveform and spectrum wave by decreasing chunk density caught by the mic. Or, try to convert it into a fft reader and capture sound fft directly from sound source. 
+
 
 
 
