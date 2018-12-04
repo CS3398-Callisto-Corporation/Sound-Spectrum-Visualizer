@@ -10,7 +10,7 @@ Each team members next steps:
 
 - Alyssa: get the data from the current fft to transfer over to anime.py and have the graph update every second or a few times a second
 
-
+- Zach: Decrease sensitivity of graphs, and implement filters on sound so that you could experiment with signal processing
 
 
 
