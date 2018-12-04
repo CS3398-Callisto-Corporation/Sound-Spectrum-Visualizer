@@ -8,7 +8,7 @@ Each team members next steps:
 
 - Wes: Research interface between pygame and the graph. Then pipe the output of pygame (the sound playing) to the input of the graph
 
--Alyssa: created a new bar chart file (anmime.py) and learned how to connect it to fft.py. Got the fft's data to transfer over but each time the graph pops up, the fft and audio pauses. It only resumes playing once the graph is closed.
+- Alyssa: created a new bar chart file (anmime.py) and learned how to connect it to fft.py. Got the fft's data to transfer over but each time the graph pops up, the fft and audio pauses. It only resumes playing once the graph is closed.
 
 
 
