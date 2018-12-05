@@ -4,6 +4,16 @@ Post Sprint 3:
 
 Project Status: Freezing GUI problem has been solved, but input data for graph was changed to the microphone. Plays songs and analysis graph shows best in a quiet room
 
+One feature/accomplishment per team member:
+
+- Wes: Implemented python multiprocessing library to run graph as its own process. No new files created, but main contribution came thorugh editing the musicPlayer.py file. I created a root process that runs the main music player GUI from the function "mainMusicPlayer()" and created another process that calls the openGraph function from the testLiveGraph.py file. This process runs the function openGraph() in musicPlayer.py. Both the mainMusicPlayer() and openGraph() process target functions are near the bottom of musicPlayer.py. I also wrote the majority (one or two lines are from other members) of the "if __name__ == '__main__':" statement at the bottom of musicPlayer.py. I also made a few small edits to folderNavigation.py to switch back to using the pygame library to play sound instead of pyaudio. 
+
+
+
+
+
+
+
 Each team members next steps:
 
 - Wes: Research interface between pygame and the graph. Then pipe the output of pygame (the sound playing) to the input of the graph
