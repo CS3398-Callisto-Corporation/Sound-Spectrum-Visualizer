@@ -10,7 +10,7 @@ One feature/accomplishment per team member:
 
 - Allen: Implemented the live waveform (time domain) and spectrum frequency wave gui into the music player. Used pyqtgraph for the base animated graph, comapred to matplotlib it is faster and more accurate. Also, it's gui desgn presentation is more aesthic than the last graph. When the music play opens testLiveGraph.py, first creates the graph in the __init__ function. The self_plotdata function is self-explanatory;plots down points on the waveforms. The update function self-updates the waveforms as it catches sound through the mic. Animation function is what makes the whole graph animated and moving. When musicPLayer.py calls liveTerstGraph.py, it calls the opengraph function which pops the graph window into screen. 
 
-
+- Chris: For Spring 3, I implemented volume bar, time bar, and fixed code that broke due to the introduction of multiprocessing in the file musicPlayer.py. In musicPlayer.py the introduction of multiprocessing caused some issues with a few of the features such as the drop down menu. This was changed to just show a folder icon instead of a drop down menu that showed file->open. There are two sections in musicPlayer.py that shows the code for the volumebar, the GUI section and the actual implementation of how to change the volume. These can be found under the commented section labeled #Volume Bar and the functions updateVol() and getVol() which both reference to functions in folderNavigation.py that I wrote last sprint. The time bar consumed most of the time as it required threading. The GUI can be seen under the commented section #Time Bar and the alogorythm can be seen under the functions getLength(), getCurrentLength(), and updateCurrentLength() in the file musicPlayer.py. I also changed how the close button works at the top right of an application. We had an issue where the process opened through multiprocessing would never close unless you directly killed the process through task manager. In the function closing_window() the process is terminated and the root (GUI) is destroyed. Then using this call root.protocol("WM_DELETE_WINDOW",closing_window) will override what the close button does.
 
 
 
@@ -26,6 +26,7 @@ Each team members next steps:
 
 - Allen: Worked on testLiveGraph, captures sounds from mic instead of capturing sound FFT from source. Next Step would be either to stabalize the waveform and spectrum wave by decreasing chunk density caught by the mic. Or, try to convert it into a fft reader and capture sound fft directly from sound source. 
 
+- Chris: Reincorporate some of the GUI functionality lost thru the addition of threading/multiprocessing like the drop down menu. Also implemnt something called ListBox from tkinter which is a clickable text box where you could select a song rather than only have the option to shuffle through each song one by one.
 
 
 
